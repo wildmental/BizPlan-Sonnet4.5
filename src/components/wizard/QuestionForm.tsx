@@ -29,7 +29,7 @@
  * - useWizardStore: 질문 답변 데이터
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useWizardStore } from '../../stores/useWizardStore';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { Question } from '../../types';
@@ -59,7 +59,7 @@ interface QuestionFormProps {
  * @param {QuestionFormProps} props - 컴포넌트 props
  * @returns {JSX.Element} 질문 폼
  */
-export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId }) => {
+export const QuestionForm = React.memo<QuestionFormProps>(({ questions, stepId }) => {
   const { updateStepData, getStepData } = useWizardStore();
   const stepData = getStepData(stepId);
 
@@ -70,16 +70,16 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
    * 질문 답변 변경 핸들러
    * 
    * @param {string} questionId - 질문 ID
-   * @param {any} value - 입력된 값
+   * @param {string | number | boolean | string[]} value - 입력된 값
    */
-  const handleChange = (questionId: string, value: any) => {
+  const handleChange = (questionId: string, value: string | number | boolean | string[]) => {
     updateStepData(stepId, questionId, value);
   };
 
   return (
     <div className="space-y-6">
       {questions.map((question) => {
-        const value = stepData[question.id] || '';
+        const value = stepData[question.id];
 
         switch (question.type) {
           case 'text':
@@ -88,7 +88,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
                 key={question.id}
                 label={question.label}
                 placeholder={question.placeholder}
-                value={value}
+                value={typeof value === 'string' ? value : ''}
                 onChange={(e) => handleChange(question.id, e.target.value)}
                 required={question.required}
                 helperText={question.description}
@@ -101,7 +101,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
                 key={question.id}
                 label={question.label}
                 placeholder={question.placeholder}
-                value={value}
+                value={typeof value === 'string' ? value : ''}
                 onChange={(e) => handleChange(question.id, e.target.value)}
                 required={question.required}
                 helperText={question.description}
@@ -116,7 +116,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
                 type="number"
                 label={question.label}
                 placeholder={question.placeholder}
-                value={value}
+                value={typeof value === 'number' ? value : 0}
                 onChange={(e) => handleChange(question.id, parseFloat(e.target.value) || 0)}
                 required={question.required}
                 helperText={question.description}
@@ -129,5 +129,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
       })}
     </div>
   );
-};
+});
+
+QuestionForm.displayName = 'QuestionForm';
 

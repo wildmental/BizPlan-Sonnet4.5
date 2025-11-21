@@ -37,7 +37,7 @@
 
 import React from 'react';
 import { useFinancialStore } from '../../stores/useFinancialStore';
-import { Input, Badge } from '../ui';
+import { Input } from '../ui';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { formatCurrency, formatNumber } from '../../lib/utils';
 import { AlertCircle, TrendingUp, Target, DollarSign } from 'lucide-react';
@@ -67,7 +67,7 @@ import { AlertCircle, TrendingUp, Target, DollarSign } from 'lucide-react';
  * 
  * @returns {JSX.Element} 재무 시뮬레이션 UI
  */
-export const FinancialSimulation: React.FC = () => {
+export const FinancialSimulation = React.memo(() => {
   const { input, metrics, chartData, updateInput } = useFinancialStore();
 
   React.useEffect(() => {
@@ -253,5 +253,7 @@ export const FinancialSimulation: React.FC = () => {
       )}
     </div>
   );
-};
+});
+
+FinancialSimulation.displayName = 'FinancialSimulation';
 

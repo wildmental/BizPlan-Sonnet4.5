@@ -43,7 +43,7 @@ import { usePMFStore } from '../../stores/usePMFStore';
 import { pmfQuestions } from '../../types/mockData';
 import { Button, Badge, Card, CardHeader, CardTitle, CardContent } from '../ui';
 import { Progress } from '../ui';
-import { CheckCircle2, AlertCircle, TrendingUp, Target } from 'lucide-react';
+import { AlertCircle, TrendingUp } from 'lucide-react';
 
 /**
  * PMFSurvey 컴포넌트
@@ -66,7 +66,7 @@ import { CheckCircle2, AlertCircle, TrendingUp, Target } from 'lucide-react';
  * 
  * @returns {JSX.Element} PMF 설문 또는 결과 화면
  */
-export const PMFSurvey: React.FC = () => {
+export const PMFSurvey = React.memo(() => {
   const { answers, report, updateAnswer, generateReport } = usePMFStore();
   const [showReport, setShowReport] = useState(false);
 
@@ -277,5 +277,7 @@ export const PMFSurvey: React.FC = () => {
       )}
     </div>
   );
-};
+});
+
+PMFSurvey.displayName = 'PMFSurvey';
 

@@ -35,7 +35,7 @@ interface BadgeProps {
  * @param {BadgeProps} props - 배지 속성
  * @returns {JSX.Element} 배지 엘리먼트
  */
-export const Badge: React.FC<BadgeProps> = ({ 
+export const Badge = React.memo<BadgeProps>(({ 
   children, 
   variant = 'default',
   className 
@@ -59,5 +59,7 @@ export const Badge: React.FC<BadgeProps> = ({
       {children}
     </span>
   );
-};
+});
+
+Badge.displayName = 'Badge';
 

@@ -43,7 +43,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * @param {React.Ref<HTMLInputElement>} ref - input element ref
  * @returns {JSX.Element} 입력 필드
  */
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, helperText, className, ...props }, ref) => {
     return (
       <div className="w-full">
@@ -77,5 +77,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input';
+InputComponent.displayName = 'Input';
+
+export const Input = React.memo(InputComponent);
 

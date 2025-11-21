@@ -50,7 +50,7 @@ interface CardProps {
  * @param {CardProps} props - 카드 속성
  * @returns {JSX.Element} 카드 컨테이너
  */
-export const Card: React.FC<CardProps> = ({ 
+export const Card = React.memo<CardProps>(({ 
   children, 
   className, 
   onClick,
@@ -69,7 +69,9 @@ export const Card: React.FC<CardProps> = ({
       {children}
     </div>
   );
-};
+});
+
+Card.displayName = 'Card';
 
 interface CardHeaderProps {
   children: React.ReactNode;
@@ -80,13 +82,15 @@ interface CardHeaderProps {
  * CardHeader 컴포넌트
  * - 카드의 헤더 영역 (하단 구분선 포함)
  */
-export const CardHeader: React.FC<CardHeaderProps> = ({ children, className }) => {
+export const CardHeader = React.memo<CardHeaderProps>(({ children, className }) => {
   return (
     <div className={cn('px-6 py-4 border-b border-gray-200', className)}>
       {children}
     </div>
   );
-};
+});
+
+CardHeader.displayName = 'CardHeader';
 
 interface CardTitleProps {
   children: React.ReactNode;
@@ -97,13 +101,15 @@ interface CardTitleProps {
  * CardTitle 컴포넌트
  * - 카드의 제목 텍스트
  */
-export const CardTitle: React.FC<CardTitleProps> = ({ children, className }) => {
+export const CardTitle = React.memo<CardTitleProps>(({ children, className }) => {
   return (
     <h3 className={cn('text-lg font-semibold text-gray-900', className)}>
       {children}
     </h3>
   );
-};
+});
+
+CardTitle.displayName = 'CardTitle';
 
 interface CardDescriptionProps {
   children: React.ReactNode;
@@ -114,13 +120,15 @@ interface CardDescriptionProps {
  * CardDescription 컴포넌트
  * - 카드의 설명 텍스트 (제목 하단)
  */
-export const CardDescription: React.FC<CardDescriptionProps> = ({ children, className }) => {
+export const CardDescription = React.memo<CardDescriptionProps>(({ children, className }) => {
   return (
     <p className={cn('mt-1 text-sm text-gray-500', className)}>
       {children}
     </p>
   );
-};
+});
+
+CardDescription.displayName = 'CardDescription';
 
 interface CardContentProps {
   children: React.ReactNode;
@@ -131,13 +139,15 @@ interface CardContentProps {
  * CardContent 컴포넌트
  * - 카드의 본문 영역
  */
-export const CardContent: React.FC<CardContentProps> = ({ children, className }) => {
+export const CardContent = React.memo<CardContentProps>(({ children, className }) => {
   return (
     <div className={cn('px-6 py-4', className)}>
       {children}
     </div>
   );
-};
+});
+
+CardContent.displayName = 'CardContent';
 
 interface CardFooterProps {
   children: React.ReactNode;
@@ -148,11 +158,13 @@ interface CardFooterProps {
  * CardFooter 컴포넌트
  * - 카드의 푸터 영역 (상단 구분선, 회색 배경)
  */
-export const CardFooter: React.FC<CardFooterProps> = ({ children, className }) => {
+export const CardFooter = React.memo<CardFooterProps>(({ children, className }) => {
   return (
     <div className={cn('px-6 py-4 border-t border-gray-200 bg-gray-50', className)}>
       {children}
     </div>
   );
-};
+});
+
+CardFooter.displayName = 'CardFooter';
 

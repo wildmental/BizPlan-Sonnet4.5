@@ -42,7 +42,7 @@ import { Check, Cloud, AlertCircle } from 'lucide-react';
  * 
  * @returns {JSX.Element | null} 저장 상태 표시 UI (idle일 경우 null)
  */
-export const SaveIndicator: React.FC = () => {
+export const SaveIndicator = React.memo(() => {
   const { saveStatus } = useProjectStore();
 
   // idle 상태일 때는 아무것도 표시하지 않음
@@ -76,5 +76,7 @@ export const SaveIndicator: React.FC = () => {
       <span>{indicator.text}</span>
     </div>
   );
-};
+});
+
+SaveIndicator.displayName = 'SaveIndicator';
 

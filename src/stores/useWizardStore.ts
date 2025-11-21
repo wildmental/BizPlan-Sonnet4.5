@@ -51,9 +51,9 @@ interface WizardState {
   /** 현재 단계 설정 */
   setCurrentStep: (step: number) => void;
   /** 단계별 질문 답변 업데이트 */
-  updateStepData: (stepId: number, questionId: string, value: any) => void;
+  updateStepData: (stepId: number, questionId: string, value: string | number | boolean | string[]) => void;
   /** 특정 단계의 데이터 조회 */
-  getStepData: (stepId: number) => Record<string, any>;
+  getStepData: (stepId: number) => Record<string, string | number | boolean | string[]>;
   /** 단계 완료 여부 확인 (필수 질문 모두 답변 완료) */
   isStepCompleted: (stepId: number) => boolean;
   /** 다음 단계로 이동 */
@@ -100,9 +100,9 @@ export const useWizardStore = create<WizardState>()(
        * 
        * @param {number} stepId - 단계 ID
        * @param {string} questionId - 질문 ID
-       * @param {any} value - 답변 값
+       * @param {string | number | boolean | string[]} value - 답변 값
        */
-      updateStepData: (stepId: number, questionId: string, value: any) => {
+      updateStepData: (stepId: number, questionId: string, value: string | number | boolean | string[]) => {
         set((state) => ({
           wizardData: {
             ...state.wizardData,
