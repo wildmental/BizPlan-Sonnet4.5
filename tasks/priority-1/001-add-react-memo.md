@@ -39,17 +39,6 @@
 - [x] ESLint 검증 완료
 - [x] displayName 설정으로 디버깅 용이성 확보
 
-- [ ] `src/components/wizard/QuestionForm.tsx`
-- [ ] `src/components/wizard/FinancialSimulation.tsx`
-- [ ] `src/components/wizard/PMFSurvey.tsx`
-- [ ] `src/components/SaveIndicator.tsx`
-
-### 3. 성능 측정
-
-- [ ] React DevTools Profiler로 최적화 전 측정
-- [ ] React.memo 적용 후 재측정
-- [ ] 리렌더링 횟수 비교 문서화
-
 ## 💡 Implementation Example
 
 ### Before

@@ -116,7 +116,7 @@ export const QuestionForm = React.memo<QuestionFormProps>(({ questions, stepId }
                 type="number"
                 label={question.label}
                 placeholder={question.placeholder}
-                value={typeof value === 'number' ? value : ''}
+                value={typeof value === 'number' ? value : 0}
                 onChange={(e) => handleChange(question.id, parseFloat(e.target.value) || 0)}
                 required={question.required}
                 helperText={question.description}
