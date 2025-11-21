@@ -70,9 +70,9 @@ export const QuestionForm = React.memo<QuestionFormProps>(({ questions, stepId }
    * 질문 답변 변경 핸들러
    * 
    * @param {string} questionId - 질문 ID
-   * @param {any} value - 입력된 값
+   * @param {string | number | boolean | string[]} value - 입력된 값
    */
-  const handleChange = (questionId: string, value: string | number) => {
+  const handleChange = (questionId: string, value: string | number | boolean | string[]) => {
     updateStepData(stepId, questionId, value);
   };
 
