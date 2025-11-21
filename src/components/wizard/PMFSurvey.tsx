@@ -43,7 +43,7 @@ import { usePMFStore } from '../../stores/usePMFStore';
 import { pmfQuestions } from '../../types/mockData';
 import { Button, Badge, Card, CardHeader, CardTitle, CardContent } from '../ui';
 import { Progress } from '../ui';
-import { CheckCircle2, AlertCircle, TrendingUp, Target } from 'lucide-react';
+import { AlertCircle, TrendingUp } from 'lucide-react';
 
 /**
  * PMFSurvey 컴포넌트

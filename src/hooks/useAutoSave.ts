@@ -50,9 +50,9 @@ import { debounce } from '../lib/utils';
  * @param {any} data - 저장할 데이터
  * @param {number} delay - Debounce 지연 시간 (기본 1000ms)
  */
-export const useAutoSave = (data: any, delay: number = 1000) => {
+export const useAutoSave = (data: unknown, delay: number = 1000) => {
   const { setSaveStatus } = useProjectStore();
-  const previousDataRef = useRef<string>();
+  const previousDataRef = useRef<string>('');
 
   useEffect(() => {
     // 현재 데이터를 JSON 문자열로 변환하여 비교
