@@ -59,7 +59,7 @@ interface QuestionFormProps {
  * @param {QuestionFormProps} props - 컴포넌트 props
  * @returns {JSX.Element} 질문 폼
  */
-export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId }) => {
+export const QuestionForm = React.memo<QuestionFormProps>(({ questions, stepId }) => {
   const { updateStepData, getStepData } = useWizardStore();
   const stepData = getStepData(stepId);
 
@@ -129,5 +129,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
       })}
     </div>
   );
-};
+});
+
+QuestionForm.displayName = 'QuestionForm';
 

@@ -66,7 +66,7 @@ import { AlertCircle, TrendingUp } from 'lucide-react';
  * 
  * @returns {JSX.Element} PMF 설문 또는 결과 화면
  */
-export const PMFSurvey: React.FC = () => {
+export const PMFSurvey = React.memo(() => {
   const { answers, report, updateAnswer, generateReport } = usePMFStore();
   const [showReport, setShowReport] = useState(false);
 
@@ -277,5 +277,7 @@ export const PMFSurvey: React.FC = () => {
       )}
     </div>
   );
-};
+});
+
+PMFSurvey.displayName = 'PMFSurvey';
 

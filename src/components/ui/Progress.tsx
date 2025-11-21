@@ -40,7 +40,7 @@ interface ProgressProps {
  * @param {ProgressProps} props - 진행률 속성
  * @returns {JSX.Element} 진행률 바
  */
-export const Progress: React.FC<ProgressProps> = ({ 
+export const Progress = React.memo<ProgressProps>(({ 
   value, 
   max = 100, 
   className,
@@ -64,5 +64,7 @@ export const Progress: React.FC<ProgressProps> = ({
       )}
     </div>
   );
-};
+});
+
+Progress.displayName = 'Progress';
 

@@ -39,7 +39,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
  * @param {ButtonProps} props - 버튼 속성
  * @returns {JSX.Element} 버튼 엘리먼트
  */
-export const Button: React.FC<ButtonProps> = ({
+export const Button = React.memo<ButtonProps>(({
   variant = 'primary',
   size = 'md',
   isLoading = false,
@@ -95,5 +95,7 @@ export const Button: React.FC<ButtonProps> = ({
       {children}
     </button>
   );
-};
+});
+
+Button.displayName = 'Button';
 

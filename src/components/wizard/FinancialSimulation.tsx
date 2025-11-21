@@ -67,7 +67,7 @@ import { AlertCircle, TrendingUp, Target, DollarSign } from 'lucide-react';
  * 
  * @returns {JSX.Element} 재무 시뮬레이션 UI
  */
-export const FinancialSimulation: React.FC = () => {
+export const FinancialSimulation = React.memo(() => {
   const { input, metrics, chartData, updateInput } = useFinancialStore();
 
   React.useEffect(() => {
@@ -253,5 +253,7 @@ export const FinancialSimulation: React.FC = () => {
       )}
     </div>
   );
-};
+});
+
+FinancialSimulation.displayName = 'FinancialSimulation';
 
