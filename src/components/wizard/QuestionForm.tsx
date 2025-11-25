@@ -29,7 +29,7 @@
  * - useWizardStore: 질문 답변 데이터
  */
 
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useWizardStore } from '../../stores/useWizardStore';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { Question } from '../../types';
@@ -68,13 +68,14 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({ questions, stepId })
 
   /**
    * 질문 답변 변경 핸들러
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * 
    * @param {string} questionId - 질문 ID
-   * @param {any} value - 입력된 값
+   * @param {string | number} value - 입력된 값
    */
-  const handleChange = (questionId: string, value: any) => {
+  const handleChange = useCallback((questionId: string, value: string | number) => {
     updateStepData(stepId, questionId, value);
-  };
+  }, [stepId, updateStepData]);
 
   return (
     <div className="space-y-6">

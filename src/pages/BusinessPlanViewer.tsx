@@ -24,7 +24,7 @@
  * - mockBusinessPlan: 사업계획서 섹션 목록
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Button, Spinner, Badge } from '../components/ui';
 import { mockBusinessPlan } from '../types/mockData';
 import ReactMarkdown from 'react-markdown';
@@ -60,10 +60,11 @@ export const BusinessPlanViewer: React.FC = () => {
 
   /**
    * AI 사업계획서 생성 시뮬레이션
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * - 실제로는 API 호출이 필요
    * - 현재는 3초 딜레이 후 완료 처리
    */
-  const handleGenerate = () => {
+  const handleGenerate = useCallback(() => {
     setIsGenerating(true);
     
     // Simulate AI generation
@@ -71,19 +72,20 @@ export const BusinessPlanViewer: React.FC = () => {
       setIsGenerating(false);
       setIsGenerated(true);
     }, 3000);
-  };
+  }, []);
 
   /**
    * 특정 섹션 재생성
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * 
    * @param {string} sectionId - 재생성할 섹션의 ID
    */
-  const handleRegenerate = (sectionId: string) => {
+  const handleRegenerate = useCallback((sectionId: string) => {
     setRegeneratingSection(sectionId);
     
     // Simulate regeneration
     setTimeout(() => {
-      setSections(sections.map(section => {
+      setSections(prevSections => prevSections.map(section => {
         if (section.id === sectionId) {
           return {
             ...section,
@@ -94,16 +96,17 @@ export const BusinessPlanViewer: React.FC = () => {
       }));
       setRegeneratingSection(null);
     }, 2000);
-  };
+  }, []);
 
   /**
    * 사업계획서 파일 내보내기
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * 
    * @param {('hwp'|'pdf')} format - 내보낼 파일 형식
    */
-  const handleExport = (format: 'hwp' | 'pdf') => {
+  const handleExport = useCallback((format: 'hwp' | 'pdf') => {
     window.alert(`${format.toUpperCase()} 다운로드 준비 완료!\n\n실제 환경에서는 파일이 다운로드됩니다.`);
-  };
+  }, []);
 
   if (!isGenerated) {
     return (

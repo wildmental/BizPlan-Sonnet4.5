@@ -35,9 +35,9 @@
  * - useFinancialStore: 재무 계산 및 데이터 관리
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useFinancialStore } from '../../stores/useFinancialStore';
-import { Input, Badge } from '../ui';
+import { Input } from '../ui';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { formatCurrency, formatNumber } from '../../lib/utils';
 import { AlertCircle, TrendingUp, Target, DollarSign } from 'lucide-react';
@@ -79,13 +79,14 @@ export const FinancialSimulation: React.FC = () => {
 
   /**
    * 입력 필드 변경 핸들러
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * 
    * @param {keyof typeof input} field - 변경할 필드명
    * @param {number} value - 새로운 값
    */
-  const handleInputChange = (field: keyof typeof input, value: number) => {
+  const handleInputChange = useCallback((field: keyof typeof input, value: number) => {
     updateInput({ [field]: value });
-  };
+  }, [updateInput]);
 
   // LTV/CAC 비율이 3 미만이면 경고 표시 (건강한 비즈니스는 3 이상)
   const ltvCacWarning = metrics && metrics.ltvCacRatio < 3;

@@ -23,7 +23,7 @@
  * - useWizardStore: 마법사 진행 상태 관리
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '../stores/useProjectStore';
 import { useWizardStore } from '../stores/useWizardStore';
@@ -59,6 +59,7 @@ export const ProjectCreate: React.FC = () => {
 
   /**
    * 폼 제출 핸들러
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * 
    * 처리 순서:
    * 1. 프로젝트명 유효성 검증
@@ -69,7 +70,7 @@ export const ProjectCreate: React.FC = () => {
    * 
    * @param {React.FormEvent} e - 폼 제출 이벤트
    */
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     
     if (!projectName.trim()) {
@@ -88,7 +89,18 @@ export const ProjectCreate: React.FC = () => {
     
     // Navigate to wizard
     navigate('/wizard/1');
-  };
+  }, [projectName, selectedTemplate, createProject, resetWizard, navigate]);
+
+  /**
+   * 템플릿 선택 핸들러
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
+   * 
+   * @param {TemplateType} templateId - 선택할 템플릿 ID
+   */
+  const handleTemplateSelect = useCallback((templateId: TemplateType) => {
+    setSelectedTemplate(templateId);
+    setError('');
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50">
@@ -138,10 +150,7 @@ export const ProjectCreate: React.FC = () => {
                         ? 'ring-2 ring-primary-600 border-primary-600'
                         : 'hover:border-primary-300'
                     }`}
-                    onClick={() => {
-                      setSelectedTemplate(template.id);
-                      setError('');
-                    }}
+                    onClick={() => handleTemplateSelect(template.id)}
                   >
                     <CardHeader>
                       <div className="text-4xl mb-2">{template.icon}</div>
