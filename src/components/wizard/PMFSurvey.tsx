@@ -38,12 +38,12 @@
  * - usePMFStore: PMF 설문 및 분석 데이터
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { usePMFStore } from '../../stores/usePMFStore';
 import { pmfQuestions } from '../../types/mockData';
 import { Button, Badge, Card, CardHeader, CardTitle, CardContent } from '../ui';
 import { Progress } from '../ui';
-import { CheckCircle2, AlertCircle, TrendingUp, Target } from 'lucide-react';
+import { AlertCircle, TrendingUp } from 'lucide-react';
 
 /**
  * PMFSurvey 컴포넌트
@@ -72,23 +72,25 @@ export const PMFSurvey: React.FC = () => {
 
   /**
    * 답변 선택 핸들러
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * 
    * @param {string} questionId - 질문 ID
    * @param {number} value - 선택한 점수 (1-4)
    */
-  const handleAnswerChange = (questionId: string, value: number) => {
+  const handleAnswerChange = useCallback((questionId: string, value: number) => {
     updateAnswer(questionId, value);
-  };
+  }, [updateAnswer]);
 
   /**
    * 진단 결과 생성 및 표시
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
    * - generateReport()로 점수 계산 및 분석
    * - 결과 화면으로 전환
    */
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     generateReport();
     setShowReport(true);
-  };
+  }, [generateReport]);
 
   // 모든 질문에 답변했는지 확인
   const isAllAnswered = answers.length === pmfQuestions.length;

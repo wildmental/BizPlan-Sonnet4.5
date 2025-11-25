@@ -31,7 +31,7 @@
  * - useWizardStore: 마법사 진행 상태 및 단계별 데이터
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useWizardStore } from '../stores/useWizardStore';
 import { Button } from '../components/ui';
@@ -75,6 +75,36 @@ export const WizardStep: React.FC = () => {
     }
   }, [stepNumber, currentStep, setCurrentStep]);
 
+  /**
+   * 다음 단계로 이동
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
+   * 
+   * 처리 순서:
+   * 1. 마지막 단계가 아니면 → 다음 단계 번호로 이동
+   * 2. 마지막 단계이면 → 사업계획서 페이지로 이동
+   */
+  const handleNext = useCallback(() => {
+    if (stepNumber < steps.length) {
+      goToNextStep();
+      navigate(`/wizard/${stepNumber + 1}`);
+    } else {
+      // Navigate to business plan viewer
+      navigate('/business-plan');
+    }
+  }, [stepNumber, steps.length, goToNextStep, navigate]);
+
+  /**
+   * 이전 단계로 이동
+   * - useCallback으로 메모이제이션하여 불필요한 리렌더링 방지
+   * - 첫 단계가 아니면 이전 단계 번호로 이동
+   */
+  const handlePrevious = useCallback(() => {
+    if (stepNumber > 1) {
+      goToPreviousStep();
+      navigate(`/wizard/${stepNumber - 1}`);
+    }
+  }, [stepNumber, goToPreviousStep, navigate]);
+
   if (!step) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -85,34 +115,6 @@ export const WizardStep: React.FC = () => {
       </div>
     );
   }
-
-  /**
-   * 다음 단계로 이동
-   * 
-   * 처리 순서:
-   * 1. 마지막 단계가 아니면 → 다음 단계 번호로 이동
-   * 2. 마지막 단계이면 → 사업계획서 페이지로 이동
-   */
-  const handleNext = () => {
-    if (stepNumber < steps.length) {
-      goToNextStep();
-      navigate(`/wizard/${stepNumber + 1}`);
-    } else {
-      // Navigate to business plan viewer
-      navigate('/business-plan');
-    }
-  };
-
-  /**
-   * 이전 단계로 이동
-   * - 첫 단계가 아니면 이전 단계 번호로 이동
-   */
-  const handlePrevious = () => {
-    if (stepNumber > 1) {
-      goToPreviousStep();
-      navigate(`/wizard/${stepNumber - 1}`);
-    }
-  };
 
   const isCompleted = isStepCompleted(stepNumber);
   const canProceed = stepNumber === steps.length || isCompleted || stepNumber === 4 || stepNumber === 5;
